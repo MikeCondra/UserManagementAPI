@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title></title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <p>UserManagementAPI history</p>
+<p>PROJECT SETUP</p>
+<p>Create a GitHub public repository with “main” as the default branch
+<a href="https://github.com/MikeCondra/UserManagementAPI.git">https://github.com/MikeCondra/UserManagementAPI.git</a></p>
+<p>Open a CMD window as administrator.</p>
+<p>In the CMD window, CD to c:\coursera    . Make c:\coursera if necessary:
+C:
+cd <br>
+md coursera
+cd coursera</p>
+<p>Run
+git clone <a href="https://github.com/MikeCondra/UserManagementAPI.git">https://github.com/MikeCondra/UserManagementAPI.git</a>
+to check out the empty project into a new directory, c:\coursera\UserManagementAPI</p>
+<p>I added to the project several files to configure GIT and VSCode. They can be seen and taken from the GitHub repro, <a href="https://github.com/MikeCondra/UserManagementAPI.git">https://github.com/MikeCondra/UserManagementAPI.git</a>.</p>
+<pre><code>.gitignore -- it excludes the .vscode dir, but allows allows three files under it (settings.json, launch.json, tasks.json) to be included.
+# VS Code
+        .vs/
+        .vscode-test/
+        .vscode/*
+        !.vscode/settings.json
+        !.vscode/tasks.json
+        !.vscode/launch.json
+
+launch.json -- content to enable debugging
+        {
+            &quot;version&quot;: &quot;0.2.0&quot;,
+            &quot;configurations&quot;: [
+                {
+                    &quot;name&quot;: &quot;.NET Core Launch (web)&quot;,
+                    &quot;type&quot;: &quot;coreclr&quot;,
+                    &quot;request&quot;: &quot;launch&quot;,
+                    &quot;preLaunchTask&quot;: &quot;build&quot;,
+                    &quot;program&quot;: &quot;${workspaceFolder}/bin/Debug/net9.0/${workspaceFolderBasename}.dll&quot;,
+                    &quot;args&quot;: [],
+                    &quot;cwd&quot;: &quot;${workspaceFolder}&quot;,
+                    &quot;stopAtEntry&quot;: false,
+                    &quot;serverReadyAction&quot;: {
+                        &quot;action&quot;: &quot;openExternally&quot;,
+                        &quot;pattern&quot;: &quot;\\bNow listening on:\\s+(https?://\\S+)&quot;
+                    },
+                    &quot;env&quot;: {
+                        &quot;ASPNETCORE_ENVIRONMENT&quot;: &quot;Development&quot;
+                    },
+                    &quot;sourceFileMap&quot;: {
+                        &quot;/Views&quot;: &quot;${workspaceFolder}/Views&quot;
+                    },
+                    &quot;justMyCode&quot;: false,
+                    &quot;symbolOptions&quot;: {
+                        &quot;searchMicrosoftSymbolServer&quot;: true,
+                        &quot;searchNuGetSymbolServer&quot;: true
+                    }
+                }
+            ]
+        }
+
+tasks.json -- content to enable debugging
+        {
+            &quot;version&quot;: &quot;2.0.0&quot;,
+            &quot;tasks&quot;: [
+                {
+                    &quot;label&quot;: &quot;build&quot;,
+                    &quot;command&quot;: &quot;dotnet&quot;,
+                    &quot;type&quot;: &quot;process&quot;,
+                    &quot;args&quot;: [
+                        &quot;build&quot;,
+                        &quot;${workspaceFolder}/${workspaceFolderBasename}.csproj&quot;,
+                        &quot;--configuration&quot;,
+                        &quot;Debug&quot;
+                    ],
+                    &quot;problemMatcher&quot;: &quot;$msCompile&quot;
+                }
+            ]
+        }
+</code></pre>
+<p>CD to c:\coursera</p>
+<p>Create a skeletal console project:
+Dotnet new console -o UserManagementAPI</p>
+<p>CD’d to c:\coursera\UserManagementAPI</p>
+<p>Ran git commands:
+Git status
+Git add .
+Git commit -m “Initial commit”
+Git push -u origin main
+The -u flag on the last command makes main the default, so in the future I can just write “git push”, not “git push origin main”</p>
+<p>This is what it looks like on GitHub:  <a href="https://gyazo.com/f7f5b3b8fc4c6871544289a5235efd3d">https://gyazo.com/f7f5b3b8fc4c6871544289a5235efd3d</a></p>
+<p>Launch VSCode: code .
+In program.cs, above the weatherforecast handler, add a root handler:
+app.MapGet(&quot;/&quot;, () =&gt; &quot;I am root!&quot;);</p>
+<p>Open terminal: Type <ctrl>~
+In Terminal, run:
+Dotnet clean
+Dotnet restore
+Dotnet build
+Dotnet run</p>
+<p>In the Terminal log, <ctrl>LeftClick on the link part  of</p>
+<p>“Now listening on: <a href="http://localhost.xxxx">http://localhost.xxxx</a>”
+Confirm that the browser opens and prints “I am root!”</p>
+<p>Stop running by typing <ctrl>C in the Terminal window.</p>
+<p>TESTING DEBUGGING WITH FULL SYMBOLS
+Put a breakpoint in program.cs at the line you added, app.MapGet(&quot;/&quot;, () =&gt; &quot;I am root!&quot;);</p>
+<p>Start debugging by clicking on the menu item Run &gt; Start Debugging.</p>
+<p>Wait for the symbols to load (the yellow lines in the Debug Console part of the Terminal pane). (This will be faster next time you try it. The first time it has to go get the symbol files.)</p>
+<p>The program will stop at your breakpoint in program.cs.</p>
+<p>Press F11 to step into app.MapGet.</p>
+<p>Press F5 to continue.</p>
+<p>Next time the program stops at your breakpoint, remove it by typing F9, then F5 to continue.</p>
+<p>Put everything in git.
+Git status
+Git add .
+Git commit -m “After first build”
+Git push</p>
+<p>What it looks like on GitHub: <a href="https://gyazo.com/ecf903df2e83806afbac7285a42fbf15">https://gyazo.com/ecf903df2e83806afbac7285a42fbf15</a></p>
+<p>ADDING COPILOT-GENERATED CODE</p>
+<p>I made the decision to use username as ID. This will delay questions about ensuring uniqueness of both name and an independent ID until later.  So, for now updates of user will be on the basis of username.</p>
+<p>I asked Edge CoPilot:</p>
+<pre><code>    &quot;I hope you are well. Let's start a new conversation. I am working on a new ASP.NET Core C# project, built form the webapi template, and will be adding inlined APIs in program.cs to implement CRUD operations. The data will be a new User class containing username and details strings. Serialization will be to/from JSON text file user.json.  What do you suggest?”
+</code></pre>
+<p>Response was: Code for a User class, code for a Repository class, a series of app.MapGet (and put, post and delete) lightweight endpoints to drop into program.cs.</p>
+<pre><code>    using System.Text.Json;
+
+    var builder = WebApplication.CreateBuilder(args);
+    var app = builder.Build();
+
+    var repository = new UserRepository();
+
+    app.MapGet(&quot;/&quot;, () =&gt;
+    {
+        return Results.Text(&quot;I am root!&quot;);
+    });
+
+    app.MapGet(&quot;/users&quot;, () =&gt;
+    {
+        return Results.Ok(repository.GetAllUsers());
+    });
+
+    app.MapGet(&quot;/users/{username}&quot;, (string username) =&gt;
+    {
+        var user = repository.GetUser(username);
+        return user != null ? Results.Ok(user) : Results.NotFound();
+    });
+
+    app.MapPost(&quot;/users&quot;, (User user) =&gt;
+    {
+        repository.AddUser(user);
+        return Results.Created($&quot;/users/{user.Username}&quot;, user);
+    });
+
+    app.MapPut(&quot;/users/{username}&quot;, (string username, User updatedUser) =&gt;
+    {
+        if (username != updatedUser.Username) return Results.BadRequest();
+        var existingUser = repository.GetUser(username);
+        if (existingUser == null) return Results.NotFound();
+        repository.UpdateUser(updatedUser);
+        return Results.NoContent();
+    });
+
+    app.MapDelete(&quot;/users/{username}&quot;, (string username) =&gt;
+    {
+        var user = repository.GetUser(username);
+        if (user == null) return Results.NotFound();
+        repository.DeleteUser(username);
+        return Results.NoContent();
+    });
+
+    app.Run();
+
+
+    public class User
+    {
+        public string Username { get; set; }
+        public string Details { get; set; }
+    }
+
+
+    public class UserRepository
+    {
+        private readonly string _filePath = &quot;user.json&quot;;
+
+        public List&lt;User&gt; GetAllUsers()
+        {
+            if (!File.Exists(_filePath)) return new List&lt;User&gt;();
+            var json = File.ReadAllText(_filePath);
+            return JsonSerializer.Deserialize&lt;List&lt;User&gt;&gt;(json);
+        }
+
+        public User GetUser(string username)
+        {
+            var users = GetAllUsers();
+            return users.FirstOrDefault(u =&gt; u.Username == username);
+        }
+
+        public void AddUser(User user)
+        {
+            var users = GetAllUsers();
+            users.Add(user);
+            SaveUsers(users);
+        }
+
+        public void UpdateUser(User updatedUser)
+        {
+            var users = GetAllUsers();
+            var user = users.FirstOrDefault(u =&gt; u.Username == updatedUser.Username);
+            if (user != null)
+            {
+                user.Details = updatedUser.Details;
+                SaveUsers(users);
+            }
+        }
+
+        public void DeleteUser(string username)
+        {
+            var users = GetAllUsers();
+            var user = users.FirstOrDefault(u =&gt; u.Username == username);
+            if (user != null)
+            {
+                users.Remove(user);
+                SaveUsers(users);
+            }
+        }
+
+        private void SaveUsers(List&lt;User&gt; users)
+        {
+            var json = JsonSerializer.Serialize(users);
+            File.WriteAllText(_filePath, json);
+        }
+    }
+</code></pre>
+<p>I dropped all of these into program.cs, replacing everything that was there before. Then, I added back a handler for “/”:</p>
+<pre><code>app.MapGet(&quot;/&quot;, () =&gt;
+{
+    return Results.Text(&quot;I am root!&quot;);
+});
+</code></pre>
+<p>I disabled null-value warnings by temporarily replacing this line in the csproj file
+<code>&lt;Nullable&gt;enable&lt;/Nullable&gt;</code>
+with
+<code>&lt;Nullable&gt;disable&lt;/Nullable&gt;</code></p>
+<p>Resolved a build error about JsonSerializer by calling GitHub Copilot, then adding “using System.Text.Json” at the top of program.cs.</p>
+<p>Next, asked Edge Copilot,</p>
+<pre><code>    &quot;That was excellent; thank you very much. Next, could you add a set of endpoint tests to be dropped into UserManagementAPI.http?&quot;
+</code></pre>
+<p>Copilot responded with a set of endpoint tests to drop into the http file.</p>
+<pre><code>    @UserManagementAPI_HostAddress = http://localhost:5182
+
+
+    ### Root endpoint
+    GET {{UserManagementAPI_HostAddress}}/
+    Accept: application/json
+
+    ### Get all users
+    GET {{UserManagementAPI_HostAddress}}/users
+    Accept: application/json
+
+    ### Get a user by username
+    GET {{UserManagementAPI_HostAddress}}/users/johndoe
+    Accept: application/json
+
+    ### Get a user by nonexistent username
+    GET {{UserManagementAPI_HostAddress}}/users/bozo
+    Accept: application/json
+
+    ### Create a new user
+    POST {{UserManagementAPI_HostAddress}}/users
+    Content-Type: application/json
+
+    {
+    &quot;username&quot;: &quot;johndoe&quot;,
+    &quot;details&quot;: &quot;John's details here&quot;
+    }
+
+    ### Update a user
+    PUT {{UserManagementAPI_HostAddress}}/users/johndoe
+    Content-Type: application/json
+
+    {
+    &quot;username&quot;: &quot;johndoe&quot;,
+    &quot;details&quot;: &quot;Updated details for John&quot;
+    }
+
+    ### Delete a user
+    DELETE {{UserManagementAPI_HostAddress}}/users/johndoe
+    Accept: application/json
+</code></pre>
+<p>I manually modified the tests, changing <a href="http://localhost:5000">http://localhost:5000</a> to {{UserManagementAPI_HostAddress}} and ensuring there was a line at the top of the http file like this:
+@UserManagementAPI_HostAddress = <a href="http://localhost:5182">http://localhost:5182</a></p>
+<p>TESTING AND SAVING</p>
+<p>Added a “fetch nonexistent user” test and used it.</p>
+<p>Saved this document as <a href="http://readme.html">readme.md</a></p>
+<p>Saved everything to <a href="https://github.com/MikeCondra/UserManagementAPI.git">https://github.com/MikeCondra/UserManagementAPI.git</a>
+git status
+git add .
+git commit -m &quot;Project phase 1 complete&quot;
+git push</p>
+<p>Project complete for now.</p>
+
+            <script async src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+            
+        </body>
+        </html>

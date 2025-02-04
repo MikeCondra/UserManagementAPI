@@ -1,6 +1,41 @@
 @UserManagementAPI_HostAddress = http://localhost:5182
 
-GET {{UserManagementAPI_HostAddress}}/weatherforecast/
+
+### Root endpoint
+GET {{UserManagementAPI_HostAddress}}/
 Accept: application/json
 
-###
+### Get all users
+GET {{UserManagementAPI_HostAddress}}/users
+Accept: application/json
+
+### Get a user by username
+GET {{UserManagementAPI_HostAddress}}/users/johndoe
+Accept: application/json
+
+### Get a user by nonexistent username
+GET {{UserManagementAPI_HostAddress}}/users/bozo
+Accept: application/json
+
+### Create a new user
+POST {{UserManagementAPI_HostAddress}}/users
+Content-Type: application/json
+
+{
+  "username": "johndoe",
+  "details": "John's details here"
+}
+
+### Update a user
+PUT {{UserManagementAPI_HostAddress}}/users/johndoe
+Content-Type: application/json
+
+{
+  "username": "johndoe",
+  "details": "Updated details for John"
+}
+
+### Delete a user
+DELETE {{UserManagementAPI_HostAddress}}/users/johndoe
+Accept: application/json
+
