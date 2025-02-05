@@ -21,6 +21,18 @@ namespace UserManagementAPI
             }
         }
 
+        public void DeleteAllUsers()
+        {
+            try
+            {
+                File.Delete(_filePath);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while deleting the file: {ex.Message}");
+            }
+        }
+
         private void SaveUsers(List<User> users)
         {
             try
@@ -42,10 +54,18 @@ namespace UserManagementAPI
             return users.FirstOrDefault(u => Program.NormalizeUsername(u.Username) == normalizedUsername);
         }
 
+        public int GetCountUsers()
+        {
+            var users = GetAllUsers();
+            return users.Count;
+        }
+
         public void AddUser(User user)
         {
             user.Username = Program.NormalizeUsername(user.Username);
+            if (user.Username == "") return; // do not add empty users
             var users = GetAllUsers();
+            if (users.Any(u => Program.NormalizeUsername(u.Username) == user.Username)) return; // do not add duplicate users
             users.Add(user);
             SaveUsers(users);
         }

@@ -1,5 +1,8 @@
 @UserManagementAPI_HostAddress = http://localhost:5182
 
+### TESTS
+GET {{UserManagementAPI_HostAddress}}/test
+Accept: application/json
 
 ### Root endpoint
 GET {{UserManagementAPI_HostAddress}}/

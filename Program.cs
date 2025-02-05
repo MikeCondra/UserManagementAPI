@@ -13,6 +13,14 @@ namespace UserManagementAPI
 
             app.MapGet("/", () => Results.Text("I am root!"));
 
+            app.MapGet("/test", () =>
+            {
+                repository.DeleteAllUsers();
+                var tests = new UserRepositoryTests();
+                var list = tests.RunAll();
+                return Results.Ok(list);
+            });
+
             app.MapGet("/users", () => Results.Ok(repository.GetAllUsers()));
 
             app.MapGet("/users/{username}", (string username) =>

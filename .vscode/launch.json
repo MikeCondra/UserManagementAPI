@@ -26,7 +26,8 @@
                 "searchMicrosoftSymbolServer": true,
                 "searchNuGetSymbolServer": true
             }
-        },
+        }
+        /*         ,
         {
             "name": ".NET Core Test",
             "type": "coreclr",
@@ -37,16 +38,18 @@
                 "--no-build",
                 "--logger:trx",
                 "--framework",
-                "net9.0"
+                "net9.0",
+                "--configuration",
+                "Debug" // Ensure tests run with the Debug configuration
             ],
             "cwd": "${workspaceFolder}",
-            "stopAtEntry": false,
+            "stopAtEntry": true,
             "console": "internalConsole",
             "justMyCode": true,
             "symbolOptions": {
                 "searchMicrosoftSymbolServer": true,
                 "searchNuGetSymbolServer": true
             }
-        }
+        } */
     ]
 }
