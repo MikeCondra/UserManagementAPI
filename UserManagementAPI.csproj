@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
-    <Nullable>disable</Nullable>
+    <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <DefineConstants>NOXUNIT</DefineConstants> <!-- Call tests directly; don't use XUnit or its [Fact] attribute -->
     <DebugType>portable</DebugType>

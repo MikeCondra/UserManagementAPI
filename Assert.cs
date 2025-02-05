@@ -2,7 +2,7 @@ namespace UserManagementAPI
 {
     public static class Assert
     {
-        public static string NotNull(object obj)
+        public static string NotNull(object? obj)
         {
             if (obj == null)
             {

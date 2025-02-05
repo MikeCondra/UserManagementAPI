@@ -6,7 +6,7 @@ namespace UserManagementAPI
     {
         private readonly string _filePath = "user.json";
 
-        public List<User> GetAllUsers()
+        public List<User>? GetAllUsers()
         {
             try
             {
@@ -47,10 +47,11 @@ namespace UserManagementAPI
         }
 
 
-        public User GetUser(string username)
+        public User? GetUser(string username)
         {
             var normalizedUsername = Program.NormalizeUsername(username);
             var users = GetAllUsers();
+            if (users == null) return null;
             return users.FirstOrDefault(u => Program.NormalizeUsername(u.Username) == normalizedUsername);
         }
 

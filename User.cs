@@ -4,7 +4,7 @@ namespace UserManagementAPI
 {
     public class User
     {
-        public string Username { get; set; }
-        public string Details { get; set; }
+        public string Username { get; set; } = "";
+        public string Details { get; set; } = "";
     }
 }

@@ -42,8 +42,15 @@ namespace UserManagementAPI
                 var user = new UserManagementAPI.User { Username = "  JohnDoe  ", Details = "Details" };
                 repository.AddUser(user);
                 var retrievedUser = repository.GetUser("johndoe");
-                log.AddRange(Assert.NotNull(retrievedUser));
-                log.AddRange(Assert.Equal("Details", retrievedUser.Details));
+                if (retrievedUser == null)
+                {
+                    log.AddRange("retrievedUser is null");
+                }
+                else
+                {
+                    log.AddRange(Assert.NotNull(retrievedUser));
+                    log.AddRange(Assert.Equal("Details", retrievedUser.Details));
+                }
             }
 
             //Submitting an empty username
@@ -65,9 +72,16 @@ namespace UserManagementAPI
                 var user2 = new UserManagementAPI.User { Username = "JohnDoe", Details = "Details" };
                 repository.AddUser(user2);
                 var retrievedUser = repository.GetUser("johndoe");
-                log.AddRange(Assert.NotNull(retrievedUser));
-                log.AddRange(Assert.Equal("Details", retrievedUser.Details));
-                log.AddRange(Assert.Equal(repository.GetCountUsers(), 1));
+                if (retrievedUser == null)
+                {
+                    log.AddRange("retrievedUser is null");
+                }
+                else
+                {
+                    log.AddRange(Assert.NotNull(retrievedUser));
+                    log.AddRange(Assert.Equal("Details", retrievedUser.Details));
+                    log.AddRange(Assert.Equal(repository.GetCountUsers(), 1));
+                }
             }
         }
 
