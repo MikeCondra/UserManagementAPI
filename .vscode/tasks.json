@@ -12,6 +12,19 @@
 				"Debug"
 			],
 			"problemMatcher": "$msCompile"
+		},
+		{
+			"label": "build-test",
+			"command": "dotnet",
+			"type": "process",
+			"args": [
+				"build",
+				"${workspaceFolder}/${workspaceFolderBasename}.csproj",
+				"/property:GenerateFullPaths=true",
+				"/consoleloggerparameters:NoSummary",
+				"/p:Configuration=Test"
+			],
+			"problemMatcher": "$msCompile"
 		}
 	]
 }

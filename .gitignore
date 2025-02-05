@@ -11,6 +11,9 @@ out/
 !.vscode/tasks.json
 !.vscode/launch.json
 
+# nunit
+TestResults/
+
 # User-specific files
 *.rsuser
 *.suo

@@ -1,4 +1,8 @@
-UserManagementAPI history
+//
+//
+// README PHASE 1 -- Project creation
+//
+// 
 
 PROJECT SETUP
 
@@ -347,5 +351,53 @@ Project complete for now.
 
 
 
+//
+//
+// README PHASE 2 -- Debugging
+//
+//
 
 
+Step 1 will be to enable null handling in the csproj file.
+    `<Nullable>disable</Nullable>` => `<Nullable>enable</Nullable>`
+
+Action: nothing. That did not result in any build warnings. So mission accomplished.
+
+
+Step 2 is to see whether capitalization is an issue in usernames.  It is: Johndoe and johndoe are not equivalent.
+
+Action: UserRepository.GetUse must do case-insensitive lookup.
+
+Old: 
+
+    public User GetUser(string username)
+    {
+        var users = GetAllUsers();
+        return users.FirstOrDefault(u => u.Username == username);
+    }
+
+New: 
+
+    public User GetUser(string username)
+    {
+        var users = GetAllUsers();
+        return users.FirstOrDefault(u => u.Username.Equals(username, StringComparison.OrdinalIgnoreCase));
+    }
+
+
+Step 3: Propagate the case-insensitive name match other places where name matching happens: DeleteUser, UpdateUser.
+
+In MapPut(url/users/{userName}, name test must be case insensitive).
+Actions: return TypedResult.Ok(updatedUser)
+
+Need to get rid of top-level code in favor of a Program class and Main() fn.
+
+Add static Program.UsernameMatch function to have a single place to do all name matches, trim names, mask out case.
+
+It is not, and should not be possible to rename a user by the PUT/update method. If that were to happen, then the old target name would need to be dealt with.
+
+Gave Edge Copilot the entire program.cs file to see what it suggested.
+
+ - Suggested using a NOrmalize function to put internal Usernames in trimmed, lower-case style. Suggested using this in message handlers to prevent non-normalized usernames from being saved.
+ - Suggested adding try/catch the GetUsers/SaveUsers that deal with JSON serialization.
+ - Suggested adding unit testing; offered a UserRepositoryTests class, which I put in its own file.

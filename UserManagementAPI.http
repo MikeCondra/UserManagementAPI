@@ -13,6 +13,10 @@ Accept: application/json
 GET {{UserManagementAPI_HostAddress}}/users/johndoe
 Accept: application/json
 
+### Get an existing username but with wrong capitalization
+GET {{UserManagementAPI_HostAddress}}/users/JohnDoe
+Accept: application/json
+
 ### Get a user by nonexistent username
 GET {{UserManagementAPI_HostAddress}}/users/bozo
 Accept: application/json
@@ -33,6 +37,60 @@ Content-Type: application/json
 {
   "username": "johndoe",
   "details": "Updated details for John"
+}
+
+### Update a user with an empty username
+PUT {{UserManagementAPI_HostAddress}}/users/johndoe
+Content-Type: application/json
+
+{
+  "username": "",
+  "details": "Updated details for Johndoe with empty username"
+}
+
+### Update a user with a different not-empty username
+PUT {{UserManagementAPI_HostAddress}}/users/johndoe
+Content-Type: application/json
+
+{
+  "username": "JohnJDoe",
+  "details": "Updated details for Johndoe => JohnJDoe"
+}
+
+### Unupdate a user
+PUT {{UserManagementAPI_HostAddress}}/users/johndoe
+Content-Type: application/json
+
+{
+  "username": "johndoe",
+  "details": "Unupdated details for John"
+}
+
+### Update a user with case difference in name
+PUT {{UserManagementAPI_HostAddress}}/users/JOHNDOE
+Content-Type: application/json
+
+{
+  "username": "JOHNDOE",
+  "details": "Updated details for JOHNDOE"
+}
+
+### Update a user with case difference in whitespace around name url
+PUT {{UserManagementAPI_HostAddress}}/users/%20JOHNDOE
+Content-Type: application/json
+
+{
+  "username": "JOHNDOE",
+  "details": "Updated details for %20JOHNDOE"
+}
+
+### Update a user with case difference in whitespace around name
+PUT {{UserManagementAPI_HostAddress}}/users/JOHNDOE
+Content-Type: application/json
+
+{
+  "username": " JOHNDOE ",
+  "details": "Updated details for ' JOHNDOE '"
 }
 
 ### Delete a user
