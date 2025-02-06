@@ -58,6 +58,7 @@ namespace UserManagementAPI
         public int GetCountUsers()
         {
             var users = GetAllUsers();
+            if (users == null) return 0;
             return users.Count;
         }
 
@@ -66,6 +67,7 @@ namespace UserManagementAPI
             user.Username = Program.NormalizeUsername(user.Username);
             if (user.Username == "") return; // do not add empty users
             var users = GetAllUsers();
+            if (users == null) users = new List<User>();
             if (users.Any(u => Program.NormalizeUsername(u.Username) == user.Username)) return; // do not add duplicate users
             users.Add(user);
             SaveUsers(users);
@@ -75,6 +77,7 @@ namespace UserManagementAPI
         {
             var normalizedUsername = Program.NormalizeUsername(updatedUser.Username);
             var users = GetAllUsers();
+            if (users == null) return;
             var user = users.FirstOrDefault(u => Program.NormalizeUsername(u.Username) == normalizedUsername);
             if (user != null)
             {
@@ -87,6 +90,7 @@ namespace UserManagementAPI
         {
             var normalizedUsername = Program.NormalizeUsername(username);
             var users = GetAllUsers();
+            if (users == null) return;
             var user = users.FirstOrDefault(u => Program.NormalizeUsername(u.Username) == normalizedUsername);
             if (user != null)
             {
