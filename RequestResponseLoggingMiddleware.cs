@@ -35,7 +35,7 @@ public class RequestResponseLoggingMiddleware
         await _next(context);
 
         // Log the response
-        var response = await FormatResponse(context.Response);
+        var response = await FormatResponse(context.Response, context.Request.Method);
         Log($"HTTP Response Information:{Environment.NewLine}{response}");
 
         // Copy the contents of the new memory stream (which contains the response) to the original stream, which is then returned to the client.
@@ -60,16 +60,16 @@ public class RequestResponseLoggingMiddleware
         var bodyAsText = Encoding.UTF8.GetString(buffer);
         request.Body = body;  // Rewind the stream for the next middleware
 
-        return $"{request.Scheme} {request.Host}{request.Path} {request.QueryString} {bodyAsText}";
+        return $"{request.Method} {request.Scheme} {request.Host}{request.Path} {request.QueryString} {bodyAsText}";
     }
 
-    private async Task<string> FormatResponse(HttpResponse response)
+    private async Task<string> FormatResponse(HttpResponse response, string method)
     {
         response.Body.Seek(0, SeekOrigin.Begin);
         var text = await new StreamReader(response.Body).ReadToEndAsync();
         response.Body.Seek(0, SeekOrigin.Begin);
 
-        return $"{response.StatusCode}: {text}";
+        return $"{method} {response.StatusCode}: {text}";
     }
 
     private void Log(string logEntry)
