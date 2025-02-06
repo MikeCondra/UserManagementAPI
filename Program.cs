@@ -9,7 +9,10 @@ namespace UserManagementAPI
             var builder = WebApplication.CreateBuilder(args);
             var app = builder.Build();
 
-            // Add the middleware
+            // Add the exception handling middleware
+            app.UseMiddleware<ExceptionHandlingMiddleware>();
+
+            // Other middleware
             app.UseMiddleware<RequestResponseLoggingMiddleware>();
 
             var repository = new UserRepository();
@@ -55,7 +58,12 @@ namespace UserManagementAPI
                 return Results.NoContent();
             });
 
-            // Report RequestResponseLoggingMiddleware logs
+            // Endpoint to generate a test exception
+            app.MapGet("/generate-exception", () =>
+            {
+                throw new Exception("This is a test exception!");
+            });
+
             app.MapGet("/logs", () =>
             {
                 var logs = RequestResponseLoggingMiddleware.GetLogEntries();
@@ -64,6 +72,7 @@ namespace UserManagementAPI
 
             app.Run();
         }
+
 
         public static bool UsernameMatch(string username1, string username2)
         {
@@ -75,7 +84,5 @@ namespace UserManagementAPI
             return username.Trim().ToLowerInvariant();
         }
     }
-
-
 
 }

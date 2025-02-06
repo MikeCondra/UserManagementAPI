@@ -8,6 +8,10 @@ Accept: application/json
 GET {{UserManagementAPI_HostAddress}}/logs
 Accept: application/json
 
+### GENERATE AN EXCEPTION FOR TESTING
+GET {{UserManagementAPI_HostAddress}}/generate-exception
+Accept: application/json
+
 ### Get all users
 GET {{UserManagementAPI_HostAddress}}/users
 Accept: application/json
