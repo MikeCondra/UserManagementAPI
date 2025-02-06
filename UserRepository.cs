@@ -13,6 +13,7 @@ namespace UserManagementAPI
                 if (!File.Exists(_filePath)) return new List<User>();
                 var json = File.ReadAllText(_filePath);
                 var list = JsonSerializer.Deserialize<List<User>>(json);
+                if (list == null) return new List<User>();
 
                 // Normalize username in each incoming User, dropping invalid values
                 list.RemoveAll(user =>

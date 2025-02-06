@@ -52,11 +52,15 @@ I found several bugs manually in the UserRepository code by running these tests 
 Copilot also suggested adding try/catch blocks in places where the serialization file was written/read.
 
 
-## Performance-related suggestions from Copilot
 
-Copilot named areas where performance could be improved in general: Optimize data access, use asynchronous calls, cache data, optimize string operations, reduce redundant operations, use dependency injection.
+## Improvements to reliability, using Copilot suggestions
 
-I implemented Copilot's suggestion for adding async/await to the file read/write operations.
+In all function that add or modify repository data, ensured that usernames (the keys) are always normalized (lower-case, not empty).  
+
+Made change to the repository's GetUsers function to ensure that usernames are unique and valid. Used Copilot-suggested code for this.
+
+
+
 
 ## Things to do next
 
