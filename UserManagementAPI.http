@@ -4,8 +4,8 @@
 GET {{UserManagementAPI_HostAddress}}/test
 Accept: application/json
 
-### Root endpoint
-GET {{UserManagementAPI_HostAddress}}/
+### MIDDLEWARE TO LOG REQUEST/RESPONSE STATISTICS
+GET {{UserManagementAPI_HostAddress}}/logs
 Accept: application/json
 
 ### Get all users

@@ -9,6 +9,9 @@ namespace UserManagementAPI
             var builder = WebApplication.CreateBuilder(args);
             var app = builder.Build();
 
+            // Add the middleware
+            app.UseMiddleware<RequestResponseLoggingMiddleware>();
+
             var repository = new UserRepository();
 
             app.MapGet("/", () => Results.Text("I am root!"));
@@ -50,6 +53,13 @@ namespace UserManagementAPI
                 if (user == null) return Results.NotFound();
                 repository.DeleteUser(username);
                 return Results.NoContent();
+            });
+
+            // Report RequestResponseLoggingMiddleware logs
+            app.MapGet("/logs", () =>
+            {
+                var logs = RequestResponseLoggingMiddleware.GetLogEntries();
+                return Results.Json(logs);
             });
 
             app.Run();
