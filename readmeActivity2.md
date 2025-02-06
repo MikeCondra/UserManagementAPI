@@ -70,4 +70,4 @@ In UserRepositoryTests.cs, add more xunit-style tests for DELETE, PUT and POST o
 Maybe, add OpenAPI/Swagger interface generation.
 
 
-This marks the end of Activity 2.
+This marks the end of Activity 2. 
