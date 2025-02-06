@@ -52,6 +52,12 @@ I found several bugs manually in the UserRepository code by running these tests 
 Copilot also suggested adding try/catch blocks in places where the serialization file was written/read.
 
 
+## Performance-related suggestions from Copilot
+
+Copilot named areas where performance could be improved in general: Optimize data access, use asynchronous calls, cache data, optimize string operations, reduce redundant operations, use dependency injection.
+
+I implemented Copilot's suggestion for adding async/await to the file read/write operations.
+
 ## Things to do next
 
 
