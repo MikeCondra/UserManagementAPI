@@ -12,7 +12,34 @@ namespace UserManagementAPI
             {
                 if (!File.Exists(_filePath)) return new List<User>();
                 var json = File.ReadAllText(_filePath);
-                return JsonSerializer.Deserialize<List<User>>(json);
+                var list = JsonSerializer.Deserialize<List<User>>(json);
+
+                // Normalize username in each incoming User, dropping invalid values
+                list.RemoveAll(user =>
+                {
+                    var name = Program.NormalizeUsername(user.Username);
+                    if (string.IsNullOrWhiteSpace(name))
+                    {
+                        return true; // Remove user if the normalized username is invalid
+                    }
+                    user.Username = name;
+                    return false; // Keep user if the normalized username is valid
+                });
+
+                // Detect and remove duplicate usernames
+                var seenUsernames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+                list.RemoveAll(user =>
+                {
+                    if (seenUsernames.Contains(user.Username))
+                    {
+                        return true; // Remove user if the username is a duplicate
+                    }
+                    seenUsernames.Add(user.Username);
+                    return false; // Keep user if the username is unique
+                });
+
+                // Do integrity check on incoming List<User>
+                return list;
             }
             catch (Exception ex)
             {
@@ -49,10 +76,11 @@ namespace UserManagementAPI
 
         public User? GetUser(string username)
         {
-            var normalizedUsername = Program.NormalizeUsername(username);
+            username = Program.NormalizeUsername(username);
+            if (string.IsNullOrWhiteSpace(username)) return null; // do not add empty users
             var users = GetAllUsers();
             if (users == null) return null;
-            return users.FirstOrDefault(u => Program.NormalizeUsername(u.Username) == normalizedUsername);
+            return users.FirstOrDefault(u => string.Equals(u.Username, username, StringComparison.OrdinalIgnoreCase));
         }
 
         public int GetCountUsers()
@@ -65,20 +93,21 @@ namespace UserManagementAPI
         public void AddUser(User user)
         {
             user.Username = Program.NormalizeUsername(user.Username);
-            if (user.Username == "") return; // do not add empty users
+            if (string.IsNullOrWhiteSpace(user.Username)) return; // do not add empty users
             var users = GetAllUsers();
             if (users == null) users = new List<User>();
-            if (users.Any(u => Program.NormalizeUsername(u.Username) == user.Username)) return; // do not add duplicate users
+            if (users.Any(u => string.Equals(u.Username, user.Username, StringComparison.OrdinalIgnoreCase))) return; // do not add duplicate users
             users.Add(user);
             SaveUsers(users);
         }
 
         public void UpdateUser(User updatedUser)
         {
-            var normalizedUsername = Program.NormalizeUsername(updatedUser.Username);
+            updatedUser.Username = Program.NormalizeUsername(updatedUser.Username);
+            if (string.IsNullOrWhiteSpace(updatedUser.Username)) return; // do not add empty users
             var users = GetAllUsers();
             if (users == null) return;
-            var user = users.FirstOrDefault(u => Program.NormalizeUsername(u.Username) == normalizedUsername);
+            var user = users.FirstOrDefault(u => string.Equals(u.Username, updatedUser.Username, StringComparison.OrdinalIgnoreCase));
             if (user != null)
             {
                 user.Details = updatedUser.Details;
@@ -88,10 +117,11 @@ namespace UserManagementAPI
 
         public void DeleteUser(string username)
         {
-            var normalizedUsername = Program.NormalizeUsername(username);
+            username = Program.NormalizeUsername(username);
+            if (string.IsNullOrWhiteSpace(username)) return;
             var users = GetAllUsers();
             if (users == null) return;
-            var user = users.FirstOrDefault(u => Program.NormalizeUsername(u.Username) == normalizedUsername);
+            var user = users.FirstOrDefault(u => Program.NormalizeUsername(u.Username) == username);
             if (user != null)
             {
                 users.Remove(user);
