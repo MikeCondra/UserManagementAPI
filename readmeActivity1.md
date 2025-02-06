@@ -1,10 +1,7 @@
-//
-//
-// README PHASE 1 -- Project creation
-//
-// 
+# README FOR ACTIVITY 1 
 
-PROJECT SETUP
+
+## Creation of the GitHub repo; cloning to local machine
 
 Create a GitHub public repository with “main” as the default branch
     https://github.com/MikeCondra/UserManagementAPI.git
@@ -84,10 +81,13 @@ I added to the project several files to configure GIT and VSCode. They can be se
                 ]
             }
 
+
+## Building the skeletal webapi project
+
 CD to c:\coursera
 
-Create a skeletal console project:
-	Dotnet new console -o UserManagementAPI
+Create a skeletal webapi project:
+	Dotnet new webapi -o UserManagementAPI
 
 CD’d to c:\coursera\UserManagementAPI
 
@@ -98,9 +98,15 @@ Ran git commands:
 	Git push -u origin main
 The -u flag on the last command makes main the default, so in the future I can just write “git push”, not “git push origin main”
 
-This is what it looks like on GitHub:  https://gyazo.com/f7f5b3b8fc4c6871544289a5235efd3d	
+What the repo looks like on GitHub:  https://gyazo.com/f7f5b3b8fc4c6871544289a5235efd3d	
+
+
+## Initial running and testing
+
+CD to c:\coursera\UserManagementAPI
 
 Launch VSCode: code .
+
 In program.cs, above the weatherforecast handler, add a root handler:
 app.MapGet("/", () => "I am root!");
 
@@ -118,7 +124,10 @@ Confirm that the browser opens and prints “I am root!”
 
 Stop running by typing <ctrl>C in the Terminal window.
 
-TESTING DEBUGGING WITH FULL SYMBOLS
+
+
+##Testing and Debugging
+
 Put a breakpoint in program.cs at the line you added, app.MapGet("/", () => "I am root!");
 
 Start debugging by clicking on the menu item Run > Start Debugging.
@@ -144,15 +153,17 @@ What it looks like on GitHub: https://gyazo.com/ecf903df2e83806afbac7285a42fbf15
 
 
 
-ADDING COPILOT-GENERATED CODE
+## Using Copilot to implement CRUD operations
 
-I made the decision to use username as ID. This will delay questions about ensuring uniqueness of both name and an independent ID until later.  So, for now updates of user will be on the basis of username.
 
-I asked Edge CoPilot:
+I made the decision to use username as ID.
+
+
+I asked Edge Copilot:
 
         "I hope you are well. Let's start a new conversation. I am working on a new ASP.NET Core C# project, built form the webapi template, and will be adding inlined APIs in program.cs to implement CRUD operations. The data will be a new User class containing username and details strings. Serialization will be to/from JSON text file user.json.  What do you suggest?”
 
-Response was: Code for a User class, code for a Repository class, a series of app.MapGet (and put, post and delete) lightweight endpoints to drop into program.cs.
+Edge Copilot reponded with a full replacement for program.cs.
 
         using System.Text.Json;
 
@@ -264,9 +275,7 @@ Response was: Code for a User class, code for a Repository class, a series of ap
         }
 
 
-
-
-I dropped all of these into program.cs, replacing everything that was there before. Then, I added back a handler for “/”:
+I added back a handler for root.
 
     app.MapGet("/", () =>
     {
@@ -274,21 +283,21 @@ I dropped all of these into program.cs, replacing everything that was there befo
     });
 
 
-I disabled null-value warnings by temporarily replacing this line in the csproj file
+I disabled nwarnings about nullable reference types with a change in csproj. Changed
 	    `<Nullable>enable</Nullable>`
-with
+to
 	    `<Nullable>disable</Nullable>`
 
-Resolved a build error about JsonSerializer by calling GitHub Copilot, then adding “using System.Text.Json” at the top of program.cs.
+I resolved a build error about JsonSerializer by calling GitHub Copilot, then adding “using System.Text.Json” at the top of program.cs.
 
-Next, asked Edge Copilot,
+
+## Asking Copilot to generate tests
 
         "That was excellent; thank you very much. Next, could you add a set of endpoint tests to be dropped into UserManagementAPI.http?"
 
-Copilot responded with a set of endpoint tests to drop into the http file.
+Copilot responded with an http file.
 
-        @UserManagementAPI_HostAddress = http://localhost:5182
-
+ManagementAPI_HostAddress = http://localhost:5182
 
         ### Root endpoint
         GET {{UserManagementAPI_HostAddress}}/
@@ -330,11 +339,6 @@ Copilot responded with a set of endpoint tests to drop into the http file.
 
 
 
-I manually modified the tests, changing http://localhost:5000 to {{UserManagementAPI_HostAddress}} and ensuring there was a line at the top of the http file like this:
-	@UserManagementAPI_HostAddress = http://localhost:5182
-
-
-TESTING AND SAVING
 
 Added a “fetch nonexistent user” test and used it.
 
@@ -346,7 +350,8 @@ Saved everything to https://github.com/MikeCondra/UserManagementAPI.git
     git commit -m "Project phase 1 complete"
     git push
 
-Project complete for now.
+
+Project marks the end of Activity 1.
 
 
 

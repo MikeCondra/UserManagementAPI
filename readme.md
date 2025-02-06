@@ -1,5 +1,5 @@
 Please open one of these files:
 
-readmePhase1.md -- full description of steps taken to create the project with initial functionality. Copilot played a role here.
+readmeActivity1.md -- Steps taken to create the project with initial functionality. Copilot played a role here.
 
-readmePhase1.md -- description of how Copilot, GitHub Copilot and Perplexity.ai suggested improvements.
+readmeActivity2.md -- How Copilot and GitHub Copilot suggested improvements, and the debugging that followed.
