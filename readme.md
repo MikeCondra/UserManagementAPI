@@ -15,7 +15,7 @@ Then:
 
 - code .
 
-- open terminal with <ctrl>`
+- open terminal with ctrl+`
 
 - dotnet clean
 
