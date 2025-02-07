@@ -1,6 +1,6 @@
-using System.Collections.Concurrent;
 using System.IO;
 using System.Text;
+using System.Collections.Concurrent;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
@@ -51,14 +51,9 @@ public class RequestResponseLoggingMiddleware
 
         // Read the stream as text
         var buffer = new byte[Convert.ToInt32(request.ContentLength)];
-        int bytesRead;
-        int totalBytesRead = 0;
-        while ((bytesRead = await request.Body.ReadAsync(buffer, totalBytesRead, buffer.Length - totalBytesRead)) > 0)
-        {
-            totalBytesRead += bytesRead;
-        }
+        await request.Body.ReadExactlyAsync(buffer, 0, buffer.Length);
         var bodyAsText = Encoding.UTF8.GetString(buffer);
-        request.Body = body;  // Rewind the stream for the next middleware
+        request.Body.Seek(0, SeekOrigin.Begin);  // Rewind the stream for the next middleware
 
         return $"{request.Method} {request.Scheme} {request.Host}{request.Path} {request.QueryString} {bodyAsText}";
     }

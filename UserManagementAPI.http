@@ -1,49 +1,65 @@
 @UserManagementAPI_HostAddress = http://localhost:5182
 
-### TESTS
+### Root ("I am root!") with simulated authorization token
+GET {{UserManagementAPI_HostAddress}}/
+Accept: text/plain
+
+### Root ("I am root!") without simulator authorization token
+GET {{UserManagementAPI_HostAddress}}/?simulateToken=false
+Accept: text/plain
+
+### RUN MILDLY-MODIFIED XUNIT TESTS (Result of running stuff in UserRepositoryTests.cs)
 GET {{UserManagementAPI_HostAddress}}/test
 Accept: application/json
 
-### MIDDLEWARE TO LOG REQUEST/RESPONSE STATISTICS
+
+### MIDDLEWARE TO REPORT LOG OF REQUESTS/RESPONSES
 GET {{UserManagementAPI_HostAddress}}/logs
 Accept: application/json
 
-### GENERATE AN EXCEPTION FOR TESTING
+
+### GENERATE AN EXCEPTION FOR TESTING (Make access violation; report 500 Internal Server Error)
 GET {{UserManagementAPI_HostAddress}}/generate-exception
 Accept: application/json
+
+
 
 ### Get all users
 GET {{UserManagementAPI_HostAddress}}/users
 Accept: application/json
 
+
 ### Get a user by username
 GET {{UserManagementAPI_HostAddress}}/users/johndoe
 Accept: application/json
+
 
 ### Get an existing username but with wrong capitalization
 GET {{UserManagementAPI_HostAddress}}/users/JohnDoe
 Accept: application/json
 
+
 ### Get a user by nonexistent username
 GET {{UserManagementAPI_HostAddress}}/users/bozo
 Accept: application/json
+
 
 ### Create a new user
 POST {{UserManagementAPI_HostAddress}}/users
 Content-Type: application/json
 
 {
-  "username": "johndoe",
-  "details": "John's details here"
+  "Username": "johndoe2",
+  "Details": "John details here"
 }
 
 ### Update a user
-PUT {{UserManagementAPI_HostAddress}}/users/johndoe
+PUT {{UserManagementAPI_HostAddress}}/users/johndoe2
 Content-Type: application/json
 
 {
-  "username": "johndoe",
-  "details": "Updated details for John"
+  "username": "johndoe2",
+  "details": "Johndoe2 updated details here"
 }
 
 ### Update a user with an empty username
@@ -55,14 +71,6 @@ Content-Type: application/json
   "details": "Updated details for Johndoe with empty username"
 }
 
-### Update a user with a different not-empty username
-PUT {{UserManagementAPI_HostAddress}}/users/johndoe
-Content-Type: application/json
-
-{
-  "username": "JohnJDoe",
-  "details": "Updated details for Johndoe => JohnJDoe"
-}
 
 ### Unupdate a user
 PUT {{UserManagementAPI_HostAddress}}/users/johndoe
@@ -100,7 +108,17 @@ Content-Type: application/json
   "details": "Updated details for ' JOHNDOE '"
 }
 
+### Malformed PUT; mismatch of usernames in url and body
+PUT {{UserManagementAPI_HostAddress}}/users/JOHNDOE3
+Content-Type: application/json
+
+{
+  "username": " JOHNDOE ",
+  "details": "Updated details for ' JOHNDOE3 '"
+}
+
 ### Delete a user
 DELETE {{UserManagementAPI_HostAddress}}/users/johndoe
 Accept: application/json
+
 
